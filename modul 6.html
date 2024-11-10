@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perpustakaan Digital</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #006400;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        section {
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: #006400;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #006400;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #006400;
+            color: white;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        form input, form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #daftar-buku {
+            margin-top: 20px;
+        }
+
+        #message {
+            margin-top: 20px;
+            color: #006400;
+        }
+
+        #buku-list li {
+            list-style-type: square;
+        }
+    </style>
+    <!-- Memasukkan jQuery dan Plugin Validasi -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Perpustakaan UGM</h1>
+    </header>
+
+    <section id="daftar-buku">
+        <h2>Daftar Buku</h2>
+        <ul id="buku-list">
+            <!-- Daftar buku akan dimuat disini oleh jQuery -->
+        </ul>
+    </section>
+
+    <section id="form-pinjam">
+        <h2>Formulir Peminjaman Buku</h2>
+        <form id="form-peminjaman">
+            <label for="nama">Nama</label>
+            <input type="text" id="nama" name="nama" required>
+
+            <label for="buku">Pilih Buku</label>
+            <select id="buku" name="buku" required>
+                <option value="">--Pilih Buku--</option>
+            </select>
+
+            <button type="submit">Pinjam Buku</button>
+        </form>
+        <div id="message"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Perpustakaan UGM</p>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            // Daftar buku yang tersedia
+            const books = [
+                { id: 1, title: "Sejarah Islam di Nusantara" },
+                { id: 2, title: "Manajemen Bisnis" },
+                { id: 3, title: "Akuntansi Sektor Publik" },
+                { id: 4, title: "Pengantar Ilmu Komunikasi" },
+                { id: 5, title: "Psikologi Umum" }
+            ];
+
+            // Menampilkan daftar buku dalam bentuk list
+            books.forEach(book => {
+                $('#buku-list').append(`<li>${book.title}</li>`);
+                
+                // Menambahkan opsi buku ke dropdown
+                $('#buku').append(`<option value="${book.id}">${book.title}</option>`);
+            });
+
+            // Form Validasi menggunakan jQuery Validation Plugin
+            $('#form-peminjaman').validate({
+                rules: {
+                    nama: {
+                        required: true,
+                        minlength: 3
+                    },
+                    buku: {
+                        required: true
+                    }
+                },
+                messages: {
+                    nama: {
+                        required: "Nama harus diisi",
+                        minlength: "Nama harus terdiri dari minimal 3 karakter"
+                    },
+                    buku: {
+                        required: "Pilih buku yang ingin dipinjam"
+                    }
+                },
+                submitHandler: function(form) {
+                    // Menampilkan pesan sukses peminjaman
+                    const nama = $('#nama').val();
+                    const bukuId = $('#buku').val();
+                    const bukuTitle = books.find(book => book.id == bukuId)?.title;
+
+                    $('#message').html(`<p>Terima kasih, ${nama}! Anda telah meminjam buku "${bukuTitle}".</p>`);
+                    
+                    // Reset form setelah berhasil disubmit
+                    $(form)[0].reset();
+                    return false; // Mencegah form untuk dikirimkan secara nyata
+                }
+            });
+
+            // Efek animasi untuk menampilkan daftar buku secara perlahan
+            $('#daftar-buku').hide().fadeIn(2000);
+        });
+    </script>
+</body>
+</html>
