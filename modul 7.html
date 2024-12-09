@@ -6,74 +6,165 @@
     <title>Belajar PHP, Kalkulator, dan Login</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        h1, h2 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
             color: #333;
+            padding: 30px;
+            margin: 0;
         }
-        form {
+
+        h1, h2 {
+            color: #4CAF50;
+            text-align: center;
             margin-bottom: 20px;
         }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:disabled {
+            background-color: #e0e0e0;
+            cursor: not-allowed;
+        }
+
+        h3 {
+            text-align: center;
+            color: #333;
+        }
+
         #hariPHP {
             max-height: 400px;
-            overflow-y: scroll;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #hariPHP p {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .status {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
         }
     </style>
 </head>
 <body>
 
-    <!-- Bagian 1: Daftar Hari Belajar PHP -->
-    <h1>Daftar Hari Belajar PHP</h1>
-    <div id="hariPHP">
-        <!-- JavaScript akan menambahkan hari di sini -->
+    <div class="container">
+        <!-- Bagian 1: Daftar Hari Belajar PHP -->
+        <h1>Daftar Hari Belajar PHP</h1>
+        <div id="hariPHP">
+            <!-- JavaScript akan menambahkan hari di sini -->
+        </div>
+
+        <hr>
+
+        <!-- Bagian 2: Kalkulator -->
+        <h2>Form Input Bilangan untuk Kalkulator</h2>
+        <form id="kalkulatorForm">
+            <label for="bil1">Bilangan 1:</label>
+            <input type="number" id="bil1" required><br>
+
+            <label for="bil2">Bilangan 2:</label>
+            <input type="number" id="bil2" required><br>
+
+            <label for="operator">Pilih Operasi:</label>
+            <select id="operator" required>
+                <option value="tambah">Tambah</option>
+                <option value="kurang">Kurang</option>
+                <option value="kali">Kali</option>
+                <option value="bagi">Bagi</option>
+            </select><br>
+
+            <button type="button" onclick="hitung()">Hitung</button>
+        </form>
+
+        <h3 id="hasil"></h3>
+
+        <hr>
+
+        <!-- Bagian 3: Form Login -->
+        <h2>Login Form</h2>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" required><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" required><br>
+
+            <button type="button" onclick="login()">Login</button>
+        </form>
+
+        <div id="loginStatus" class="status"></div>
     </div>
-
-    <hr>
-
-    <!-- Bagian 2: Kalkulator -->
-    <h2>Form Input Bilangan untuk Kalkulator</h2>
-    <form id="kalkulatorForm">
-        <label for="bil1">Bilangan 1:</label>
-        <input type="number" id="bil1" required><br><br>
-
-        <label for="bil2">Bilangan 2:</label>
-        <input type="number" id="bil2" required><br><br>
-
-        <label for="operator">Pilih Operasi:</label>
-        <select id="operator" required>
-            <option value="tambah">Tambah</option>
-            <option value="kurang">Kurang</option>
-            <option value="kali">Kali</option>
-            <option value="bagi">Bagi</option>
-        </select><br><br>
-
-        <button type="button" onclick="hitung()">Hitung</button>
-    </form>
-
-    <h3 id="hasil"></h3>
-
-    <hr>
-
-    <!-- Bagian 3: Form Login -->
-    <h2>Login Form</h2>
-    <form id="loginForm">
-        <label for="username">Username:</label>
-        <input type="text" id="username" required><br><br>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" required><br><br>
-
-        <button type="button" onclick="login()">Login</button>
-    </form>
-
-    <h3 id="loginStatus"></h3>
 
     <script>
         // Bagian 1: Menampilkan Hari Belajar PHP (hingga hari ke-1000)
-        for (let i = 1; i <= 1000; i++) { // Menampilkan hingga 1000 hari
-            document.getElementById('hariPHP').innerHTML += `<p>Ini adalah hari ke-${i} belajar PHP</p>`;
+        function tampilkanHariBelajar() {
+            let content = '';
+            for (let i = 1; i <= 1000; i++) {
+                content += `<p>Ini adalah hari ke-${i} belajar PHP</p>`;
+            }
+            document.getElementById('hariPHP').innerHTML = content;
         }
+
+        // Panggil fungsi untuk menampilkan hari belajar PHP saat halaman dimuat
+        window.onload = tampilkanHariBelajar;
 
         // Bagian 2: Kalkulator
         function hitung() {
@@ -95,7 +186,7 @@
                     hasil = bil1 / bil2;
                 }
             }
-            
+
             document.getElementById('hasil').innerText = `Hasil dari ${bil1} ${operator} ${bil2} adalah: ${hasil}`;
         }
 
@@ -106,15 +197,16 @@
             const validUsername = 'admin';
             const validPassword = 'password123';
 
+            let statusElement = document.getElementById('loginStatus');
             if (username === "" || password === "") {
-                document.getElementById('loginStatus').innerText = "Input tidak lengkap. Username dan Password harus diisi.";
-                document.getElementById('loginStatus').style.color = "red";
+                statusElement.innerText = "Input tidak lengkap. Username dan Password harus diisi.";
+                statusElement.className = 'status error';
             } else if (username === validUsername && password === validPassword) {
-                document.getElementById('loginStatus').innerText = `Login sukses! Selamat datang, ${username}.`;
-                document.getElementById('loginStatus').style.color = "green";
+                statusElement.innerText = `Login sukses! Selamat datang, ${username}.`;
+                statusElement.className = 'status success';
             } else {
-                document.getElementById('loginStatus').innerText = "Login gagal! Username atau Password salah.";
-                document.getElementById('loginStatus').style.color = "red";
+                statusElement.innerText = "Login gagal! Username atau Password salah.";
+                statusElement.className = 'status error';
             }
         }
     </script>
