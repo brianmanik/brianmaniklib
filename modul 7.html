@@ -4,95 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Belajar PHP, Kalkulator, dan Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
+
+    <!-- Bagian 1: Daftar Hari Belajar PHP -->
     <h1>Daftar Hari Belajar PHP</h1>
-    <?php
-    for ($i = 1; $i <= 10; $i++) { // Menampilkan 10 hari untuk contoh
-        echo "<p>Ini adalah hari ke-" . $i . " belajar PHP</p>";
-    }
-    ?>
-    
+    <div id="hariPHP">
+        <!-- JavaScript akan menambahkan hari di sini -->
+    </div>
+
     <hr>
 
+    <!-- Bagian 2: Kalkulator -->
     <h2>Form Input Bilangan untuk Kalkulator</h2>
-    <form action="" method="GET">
+    <form id="kalkulatorForm">
         <label for="bil1">Bilangan 1:</label>
-        <input type="number" name="bil1" id="bil1" required><br><br>
-        
+        <input type="number" id="bil1" required><br><br>
+
         <label for="bil2">Bilangan 2:</label>
-        <input type="number" name="bil2" id="bil2" required><br><br>
-        
+        <input type="number" id="bil2" required><br><br>
+
         <label for="operator">Pilih Operasi:</label>
-        <select name="operator" id="operator" required>
+        <select id="operator" required>
             <option value="tambah">Tambah</option>
             <option value="kurang">Kurang</option>
             <option value="kali">Kali</option>
             <option value="bagi">Bagi</option>
         </select><br><br>
 
-        <button type="submit">Hitung</button>
+        <button type="button" onclick="hitung()">Hitung</button>
     </form>
 
-    <?php
-    if (isset($_GET['bil1']) && isset($_GET['bil2']) && isset($_GET['operator'])) {
-        $bil1 = $_GET['bil1'];
-        $bil2 = $_GET['bil2'];
-        $operator = $_GET['operator'];
-        
-        switch ($operator) {
-            case 'tambah':
-                $hasil = $bil1 + $bil2;
-                break;
-            case 'kurang':
-                $hasil = $bil1 - $bil2;
-                break;
-            case 'kali':
-                $hasil = $bil1 * $bil2;
-                break;
-            case 'bagi':
-                if ($bil2 == 0) {
-                    $hasil = "Tidak bisa dibagi dengan 0";
-                } else {
-                    $hasil = $bil1 / $bil2;
-                }
-                break;
-        }
-        
-        echo "<p>Hasil dari $bil1 $operator $bil2 adalah: $hasil</p>";
-    }
-    ?>
+    <h3 id="hasil"></h3>
 
     <hr>
 
+    <!-- Bagian 3: Form Login -->
     <h2>Login Form</h2>
-    <form action="" method="POST">
+    <form id="loginForm">
         <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required><br><br>
-        
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required><br><br>
+        <input type="text" id="username" required><br><br>
 
-        <button type="submit" name="login">Login</button>
+        <label for="password">Password:</label>
+        <input type="password" id="password" required><br><br>
+
+        <button type="button" onclick="login()">Login</button>
     </form>
 
-    <?php
-    // Daftar ID dan password yang valid
-    $valid_username = "admin";
-    $valid_password = "password123";
+    <h3 id="loginStatus"></h3>
 
-    if (isset($_POST['login'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-
-        if (empty($username) || empty($password)) {
-            echo "<p>Input tidak lengkap. Username dan Password harus diisi.</p>";
-        } else if ($username == $valid_username && $password == $valid_password) {
-            echo "<p>Login sukses! Selamat datang, $username.</p>";
-        } else {
-            echo "<p>Login gagal! Username atau Password salah.</p>";
+    <script>
+        // Bagian 1: Menampilkan Hari Belajar PHP
+        for (let i = 1; i <= 10; i++) { // Menampilkan 10 hari untuk contoh
+            document.getElementById('hariPHP').innerHTML += `<p>Ini adalah hari ke-${i} belajar PHP</p>`;
         }
-    }
-    ?>
+
+        // Bagian 2: Kalkulator
+        function hitung() {
+            const bil1 = parseFloat(document.getElementById('bil1').value);
+            const bil2 = parseFloat(document.getElementById('bil2').value);
+            const operator = document.getElementById('operator').value;
+            let hasil = 0;
+
+            if (operator === 'tambah') {
+                hasil = bil1 + bil2;
+            } else if (operator === 'kurang') {
+                hasil = bil1 - bil2;
+            } else if (operator === 'kali') {
+                hasil = bil1 * bil2;
+            } else if (operator === 'bagi') {
+                if (bil2 === 0) {
+                    hasil = "Tidak bisa dibagi dengan 0";
+                } else {
+                    hasil = bil1 / bil2;
+                }
+            }
+            
+            document.getElementById('hasil').innerText = `Hasil dari ${bil1} ${operator} ${bil2} adalah: ${hasil}`;
+        }
+
+        // Bagian 3: Login
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const validUsername = 'admin';
+            const validPassword = 'password123';
+
+            if (username === "" || password === "") {
+                document.getElementById('loginStatus').innerText = "Input tidak lengkap. Username dan Password harus diisi.";
+                document.getElementById('loginStatus').style.color = "red";
+            } else if (username === validUsername && password === validPassword) {
+                document.getElementById('loginStatus').innerText = `Login sukses! Selamat datang, ${username}.`;
+                document.getElementById('loginStatus').style.color = "green";
+            } else {
+                document.getElementById('loginStatus').innerText = "Login gagal! Username atau Password salah.";
+                document.getElementById('loginStatus').style.color = "red";
+            }
+        }
+    </script>
+
 </body>
 </html>
