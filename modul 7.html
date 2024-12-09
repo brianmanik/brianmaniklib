@@ -15,6 +15,10 @@
         form {
             margin-bottom: 20px;
         }
+        #hariPHP {
+            max-height: 400px;
+            overflow-y: scroll;
+        }
     </style>
 </head>
 <body>
@@ -66,8 +70,8 @@
     <h3 id="loginStatus"></h3>
 
     <script>
-        // Bagian 1: Menampilkan Hari Belajar PHP
-        for (let i = 1; i <= 10; i++) { // Menampilkan 10 hari untuk contoh
+        // Bagian 1: Menampilkan Hari Belajar PHP (hingga hari ke-1000)
+        for (let i = 1; i <= 1000; i++) { // Menampilkan hingga 1000 hari
             document.getElementById('hariPHP').innerHTML += `<p>Ini adalah hari ke-${i} belajar PHP</p>`;
         }
 
