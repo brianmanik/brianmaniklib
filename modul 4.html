@@ -1,179 +1,142 @@
 <!DOCTYPE html>
-<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perpustakaan Universitas Gajah Mada</title>
-
-    <!-- Link ke file CSS jika ada -->
-    <link rel="stylesheet" href="style.css">
-    
-    <style>
-        /* Reset dasar dan styling umum */
-        body, h1, p {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-        }
-
-        body {
-            background-color: #e6f7ff; /* Warna latar belakang biru muda */
-            color: #333; /* Warna teks */
-            text-align: center;
-            font-size: 18px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        /* Navbar */
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #333;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 100;
-        }
-
-        li {
-            float: left;
-        }
-
-        li a, .dropbtn {
-            display: inline-block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-
-        li a:hover, .dropdown:hover .dropbtn {
-            background-color: red;
-        }
-
-        li.dropdown {
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        /* Container untuk pesan selamat datang */
-        .welcome-container {
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            max-width: 700px;
-            width: 80%;
-            margin-top: 100px; /* Memberikan ruang di atas untuk navbar */
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .welcome-container h1 {
-            color: #00796b; /* Warna hijau untuk judul */
-            font-size: 38px;
-            margin-bottom: 20px;
-        }
-
-        .welcome-container p {
-            color: #555; /* Warna teks sedikit lebih terang untuk deskripsi */
-            font-size: 20px;
-            margin-bottom: 30px;
-        }
-
-        .button {
-            padding: 12px 25px;
-            background-color: #00796b; /* Warna tombol hijau */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .button:hover {
-            background-color: #004d40; /* Warna tombol berubah saat hover */
-        }
-
-        /* Responsif untuk layar kecil */
-        @media (max-width: 768px) {
-            .welcome-container {
-                width: 90%;
-                padding: 30px;
-            }
-
-            .welcome-container h1 {
-                font-size: 32px;
-            }
-
-            .welcome-container p {
-                font-size: 18px;
-            }
-        }
-
-    </style>
+        <title>Perpustakaan Universitas Gajah Mada</title>
+    <!-- css link -->
+    <link rel="stylesheet"> <a href="style.css"></a></link>
 </head>
-<body>
 
-    <!-- Navbar -->
+<body>
+<style>
+    body {
+    background-color: #2E8B57; /*warna Sea Green*/
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    }
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a, .dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+li.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.slider-container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+            will-change: transform;
+        }
+
+        .book {
+            min-width: 20%;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            margin: 0 10px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+        }
+
+        .book img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+    
+    .dropdown-content a:hover {background-color: #f1f1f1;}
+    
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+</style>
     <ul>
-        <li><a href="https://brianmanik.github.io/brianmaniklib/">Home</a></li>
-        <li><a href="https://lib.ugm.ac.id/">Tentang Kami</a></li>
-        <li class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Layanan</a>
-            <div class="dropdown-content">
-                <a href="perpanjangan.html">Perpanjangan Peminjaman Buku</a>
-                <a href="pemesanan.html">Pemesanan Buku</a>
-                <a href="tabelbuku.html">Tabel Bahan Buku</a>
-                <a href="formulir.html">Formulir Anggota Perpustakaan</a>
-            </div>
-        </li>
-        <li class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Modul</a>
-            <div class="dropdown-content">
-                <a href="modul 1.html">Modul 1</a>
-                <a href="modul 2.html">Modul 2</a>
-                <a href="modul 3.html">Modul 3</a>
-                <a href="modul 4.html">Modul 4</a>
-                <a href="modul 5.html">Modul 5</a>
-                <a href="modul 6.html">Modul 6</a>
-                <a href="modul 7.html">Modul 7</a>
-                <a href="#">Modul 8</a>
-            </div>
-        </li>
+  <li><a href="https://brianmanik.github.io/brianmaniklib/">Home</a></li>
+  <li><a href="https://lib.ugm.ac.id/">Tentang Kami</a></li>
+  <li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">Layanan</a>
+    <div class="dropdown-content">
+      <a href="perpanjangan.html">Perpanjangan Peminjaman Buku</a>
+      <a href="pemesanan.html">Pemesanan Buku</a>
+      <a href="tabelbuku.html">Tabel Bahan Buku</a>
+      <a href="formulir.html">Formulir Anggota Perpustakaan</a>
+    <li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">Modul</a>
+    <div class="dropdown-content">
+        <a href="modul 1.html">Modul 1</a>
+        <a href="modul 2.html">Modul 2</a>
+        <a href="modul 3.html">Modul 3</a>
+      <a href="modul 4.html">Modul 4</a>
+        <a href="modul 5.html">Modul 5</a>
+        <a href="modul 6.html">Modul 6</a>
+        <a href="modul 7.html">Modul 7</a>
+        <a href="#">Modul 8</a>
+    </div> </li>
     </ul>
 
     <!-- Konten Selamat Datang -->
